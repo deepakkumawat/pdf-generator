@@ -15,8 +15,8 @@ export class PdfController {
     @Header('Content-Disposition', 'attachment; filename=test.pdf')
     @ApiBody({ type: PdfGenerateDto })
     @ApiTags('pdf-generator')
-    @ApiOkResponse({ description: 'Converted html into pdf file'})
-    public async generatePdf(@Body() pdfGenerateDto: PdfGenerateDto, @Res() res: Response) {
+    @ApiOkResponse({ description: 'Converted html into pdf file', type: Buffer})
+    public async generatePdf(@Body() pdfGenerateDto: PdfGenerateDto, @Res() res: Response): Promise<Response<Buffer>> {
         const pdf = await this.pdfService.generatePDF(pdfGenerateDto.htmlContent);
         return res.send(pdf);
     }
